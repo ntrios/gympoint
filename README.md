@@ -9,3 +9,11 @@
 <p>
   <strong>Style guides Setup</strong>: ESLint, Prettier and EditorConfig.
 </p>
+
+<p>
+  <strong>Database</strong>: Postgres. Sequelize for database connection.
+</p>
+
+<p>
+  <strong>Security</strong>: bryptjs, jwt.
+</p>
