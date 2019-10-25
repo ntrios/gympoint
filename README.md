@@ -7,5 +7,5 @@
 </p>
 
 <p>
-  Style guides Setup: ESLint, Prettier and EditorConfig.
+  <strong>Style guides Setup</strong>: ESLint, Prettier and EditorConfig.
 </p>
