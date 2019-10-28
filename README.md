@@ -15,5 +15,5 @@
 </p>
 
 <p>
-  <strong>Security</strong>: bryptjs, jwt.
+  <strong>Security and validations</strong>: bryptjs, jwt, yup.
 </p>
