@@ -7,7 +7,6 @@ class SessionController {
   async store(req, res) {
     // get access data user
     const { email, password } = req.body;
-    console.log('Entrei aqui');
 
     // check if user is valid
     const user = await User.findOne({ where: { email } });

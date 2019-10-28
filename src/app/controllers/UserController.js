@@ -18,6 +18,10 @@ class UserController {
       admin,
     });
   }
+
+  update(req, res) {
+    const
+  }
 }
 
 export default new UserController();
