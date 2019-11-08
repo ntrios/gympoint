@@ -16,6 +16,8 @@ routes.post('/students', StudentController.store);
 routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
-routes.get('/plans', PlanController.index);
 
+routes.get('/plans', PlanController.index);
+routes.post('/plans', PlanController.store);
+routes.put('/plans', PlanController.update);
 module.exports = routes;
