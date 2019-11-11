@@ -51,6 +51,14 @@ class PlanController {
       return res.status(400).json({ error: 'Validations fails' });
     }
 
+    const plan = await Plan.findByPk({
+      where: { title: req.body.title },
+    });
+
+    if (!plan) {
+      return res.status(400).json({ error: 'Plan does not exists' });
+    }
+
     return res.json({});
   }
 }
