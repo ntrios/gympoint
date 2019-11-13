@@ -66,7 +66,19 @@ class PlanController {
     });
   }
 
-  async delete(req, res) {}
+  async delete(req, res) {
+    const plan = await Plan.findByPk(req.params.id);
+
+    if (!plan) {
+      return res.status(400).json({ error: 'Plan does not exists' });
+    }
+
+    plan.canceled_at = new Date();
+
+    await plan.save();
+
+    return res.json(plan);
+  }
 }
 
 export default new PlanController();

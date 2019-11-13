@@ -20,4 +20,5 @@ routes.put('/users', UserController.update);
 routes.get('/plans', PlanController.index);
 routes.post('/plans', PlanController.store);
 routes.put('/plans', PlanController.update);
+routes.delete('/plans/:id', PlanController.delete);
 module.exports = routes;
