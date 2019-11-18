@@ -8,13 +8,10 @@ import authConfig from '../../config/auth';
 class SessionController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      admin: Yup.boolean(),
       email: Yup.string()
         .email()
         .required(),
-      password: Yup.string().when('admin', (admin, field) =>
-        admin ? field.required() : field
-      ),
+      password: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
