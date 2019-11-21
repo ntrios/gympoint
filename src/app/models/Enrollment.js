@@ -12,10 +12,6 @@ class Enrollment extends Model {
       }
     );
 
-    this.addHook('beforeSave', (enrollment) => {
-      enrollment.end_date =
-    })
-
     return this;
   }
 
