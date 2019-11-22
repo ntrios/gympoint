@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { parse_ISO, addMonths } from 'date-fns';
+import { parseISO, addMonths } from 'date-fns';
 
 import Student from '../models/Student';
 import Plan from '../models/Plan';
@@ -31,7 +31,21 @@ class EnrollmentController {
 
     const { start_date } = req.body;
 
-    return res.json({});
+    const { duration, price } = plan;
+
+    const end_date = await addMonths(parseISO(start_date), duration);
+
+    console.log(student.id);
+
+    const enrollment = await Enrollment.create({
+      student_id: student.id,
+      plan_id: plan.id,
+      start_date,
+      end_date,
+      price,
+    });
+
+    return res.json(enrollment);
   }
 }
 
