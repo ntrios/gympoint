@@ -23,6 +23,14 @@ class EnrollmentController {
       return res.status(400).json({ error: 'Student does not exists' });
     }
 
+    const studentEnrolled = await Enrollment.findAll({
+      where: { student_id: req.body.student_id, cancelled_at: null },
+    });
+
+    if (studentEnrolled) {
+      return res.status(400).json({ error: 'Student is already enrolled' });
+    }
+
     const plan = await Plan.findByPk(req.body.plan_id);
 
     if (!plan) {
@@ -34,8 +42,6 @@ class EnrollmentController {
     const { duration, price } = plan;
 
     const end_date = await addMonths(parseISO(start_date), duration);
-
-    console.log(student.id);
 
     const enrollment = await Enrollment.create({
       student_id: student.id,
