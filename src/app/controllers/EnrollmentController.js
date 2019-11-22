@@ -5,6 +5,8 @@ import Student from '../models/Student';
 import Plan from '../models/Plan';
 import Enrollment from '../models/Enrollment';
 
+import Mail from '../../lib/mail';
+
 class EnrollmentController {
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -23,7 +25,7 @@ class EnrollmentController {
       return res.status(400).json({ error: 'Student does not exists' });
     }
 
-    const studentEnrolled = await Enrollment.findAll({
+    const studentEnrolled = await Enrollment.findOne({
       where: { student_id: req.body.student_id, cancelled_at: null },
     });
 
@@ -49,6 +51,16 @@ class EnrollmentController {
       start_date,
       end_date,
       price,
+    });
+
+    console.log(`to: ${student.name} <${student.email}>`);
+    console.log(`subject: 'Parabéns, Você está Matriculado !!!'`);
+    console.log(`text: 'Teste de envio'`);
+
+    await Mail.sendMail({
+      to: `${student.name} <${student.email}>`,
+      subject: 'Parabéns, Você está Matriculado !!!',
+      text: 'Teste de envio',
     });
 
     return res.json(enrollment);
