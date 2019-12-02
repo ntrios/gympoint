@@ -1,5 +1,5 @@
-import pt from 'date-fns/locale/pt';
 import { format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import Mail from '../../lib/Mail';
 
 class WelcomeMail {

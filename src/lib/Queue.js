@@ -1,17 +1,27 @@
- import Queue from 'bee-queue';
+import Bee from 'bee-queue';
+import redisConfig from '../config/redis';
 
+import WelcomeMail from '../app/jobs/WelcomeMail';
 
- class Queue {
+const jobs = [WelcomeMail];
+
+class Queue {
   constructor() {
-    this.queues = { };
+    this.queues = {};
 
     this.init();
-    }
-
-  init() {
-
   }
 
- }
+  init() {
+    jobs.forEach(({ key, handle }) => {
+      this.queues[key] = {
+        bee: new Bee(key, {
+          redis: redisConfig,
+        }),
+        handle,
+      };
+    });
+  }
+}
 
- export default new Queue();
+export default new Queue();
