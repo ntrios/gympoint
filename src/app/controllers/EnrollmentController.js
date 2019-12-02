@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
-import { parseISO, addMonths } from 'date-fns';
+import { parseISO, addMonths, format, endOfDay } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import Student from '../models/Student';
 import Plan from '../models/Plan';
 import Enrollment from '../models/Enrollment';
 
-import Mail from '../../lib/mail';
+import Mail from '../../lib/Mail';
 
 class EnrollmentController {
   async store(req, res) {
@@ -43,7 +44,7 @@ class EnrollmentController {
 
     const { duration, price } = plan;
 
-    const end_date = await addMonths(parseISO(start_date), duration);
+    const end_date = await addMonths(endOfDay(parseISO(start_date)), duration);
 
     const enrollment = await Enrollment.create({
       student_id: student.id,
@@ -51,16 +52,6 @@ class EnrollmentController {
       start_date,
       end_date,
       price,
-    });
-
-    console.log(`to: ${student.name} <${student.email}>`);
-    console.log(`subject: 'Parabéns, Você está Matriculado !!!'`);
-    console.log(`text: 'Teste de envio'`);
-
-    await Mail.sendMail({
-      to: `${student.name} <${student.email}>`,
-      subject: 'Parabéns, Você está Matriculado !!!',
-      text: 'Teste de envio',
     });
 
     return res.json(enrollment);
