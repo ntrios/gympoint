@@ -6,7 +6,8 @@ import Student from '../models/Student';
 import Plan from '../models/Plan';
 import Enrollment from '../models/Enrollment';
 
-import Mail from '../../lib/Mail';
+import WelcomeMail from '../jobs/WelcomeMail';
+import Queue from '../../lib/Queue';
 
 class EnrollmentController {
   async store(req, res) {
@@ -52,6 +53,12 @@ class EnrollmentController {
       start_date,
       end_date,
       price,
+    });
+
+    await Queue.add(WelcomeMail.key, {
+      plan,
+      student,
+      end_date,
     });
 
     return res.json(enrollment);
