@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Mail from '../../lib/Mail';
 
@@ -18,7 +18,7 @@ class WelcomeMail {
         student: student.name,
         plan: plan.title,
         price: parseFloat(plan.price).toFixed(2),
-        end_date: format(end_date, "dd 'de' MMMM 'de' yyyy", {
+        end_date: format(parseISO(end_date), "dd 'de' MMMM 'de' yyyy", {
           locale: pt,
         }),
       },
