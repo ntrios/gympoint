@@ -73,11 +73,7 @@ class PlanController {
       return res.status(400).json({ error: 'Plan does not exists' });
     }
 
-<<<<<<< HEAD
-    plan.canceled_at = new Date();
-=======
     plan.cancelled_at = new Date();
->>>>>>> feature/enrollment
 
     await plan.save();
 

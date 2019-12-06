@@ -17,11 +17,7 @@ module.exports = {
         allowNull: false,
       },
       price: {
-<<<<<<< HEAD
-        type: Sequelize.INTEGER,
-=======
         type: Sequelize.FLOAT,
->>>>>>> feature/enrollment
         allowNull: false,
       },
       created_at: {
@@ -32,11 +28,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-<<<<<<< HEAD
-      canceled_at: {
-=======
       cancelled_at: {
->>>>>>> feature/enrollment
         type: Sequelize.DATE,
         allowNull: true,
         default: null,
