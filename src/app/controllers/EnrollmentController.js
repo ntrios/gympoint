@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
-import { parseISO, addMonths, format, endOfDay } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import { parseISO, addMonths, endOfDay } from 'date-fns';
 
 import Student from '../models/Student';
 import Plan from '../models/Plan';
