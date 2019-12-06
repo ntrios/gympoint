@@ -9,6 +9,7 @@ class Student extends Model {
         age: Sequelize.INTEGER,
         weight: Sequelize.INTEGER,
         height: Sequelize.INTEGER,
+        cancelled_at: Sequelize.DATE,
       },
       {
         sequelize,

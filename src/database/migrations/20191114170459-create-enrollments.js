@@ -1,42 +1,47 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('plans', {
+    return queryInterface.createTable('enrollments', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      duration: {
+      student_id: {
         type: Sequelize.INTEGER,
+        references: { model: 'students', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: false,
+      },
+      plan_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'plans', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: false,
+      },
+      start_date: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      end_date: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
       price: {
-<<<<<<< HEAD
-        type: Sequelize.INTEGER,
-=======
         type: Sequelize.FLOAT,
->>>>>>> feature/enrollment
         allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: true,
       },
-<<<<<<< HEAD
-      canceled_at: {
-=======
       cancelled_at: {
->>>>>>> feature/enrollment
         type: Sequelize.DATE,
         allowNull: true,
         default: null,
@@ -45,12 +50,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.dropTable('users');
-    */
+    return queryInterface.dropTable('enrollments');
   },
 };
