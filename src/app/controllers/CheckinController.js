@@ -1,10 +1,7 @@
-import * as Yup from 'yup';
-import { Op } from 'sequelize';
-import { parseISO, addMonths, format, endOfDay, subDays } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import moment from 'moment';
 
 import Student from '../models/Student';
-import Checkin from '../models/Checkin';
+import Checkin from '../schemas/Checkin';
 
 class EnrollmentController {
   async store(req, res) {
@@ -14,14 +11,16 @@ class EnrollmentController {
       return res.status(400).json({ error: 'Student does not exists' });
     }
 
-    const checkinStudentWeek = await Checkin.findAll({
-      where: {
-        student_id: req.params.id,
-        created_at: {
-          [Op.between]: [subDays(new Date(), 7), new Date()],
-        },
-      },
-    });
+    const sevenDays = moment(new Date())
+      .subtract(7, 'days')
+      .toDate();
+
+    const checkinStudentWeek = await Checkin.find({
+      student_id: req.params.id,
+    })
+      .sort('createdAt')
+      .where('createdAt')
+      .gte(sevenDays);
 
     if (checkinStudentWeek.length >= 5) {
       return res
@@ -43,18 +42,9 @@ class EnrollmentController {
       return res.status(400).json({ error: 'Student does not exists' });
     }
 
-    const checkins = await Checkin.findAll({
-      where: { student_id: student.id, cancelled_at: null },
-      order: [['created_at', 'DESC']],
-      attributes: ['id', 'created_at'],
-      include: [
-        {
-          model: Student,
-          as: 'student',
-          attributes: ['id', 'name', 'email', 'age', 'weight', 'height'],
-        },
-      ],
-    });
+    const checkins = await Checkin.find({
+      student_id: student.id,
+    }).sort({ createdAt: 'desc' });
 
     return res.json(checkins);
   }
