@@ -36,6 +36,7 @@ class EnrollmentController {
   }
 
   async index(req, res) {
+    const { page = 1 } = req.query;
     const student = await Student.findByPk(req.params.id);
 
     if (!student || student.cancelled_at !== null) {
@@ -44,7 +45,10 @@ class EnrollmentController {
 
     const checkins = await Checkin.find({
       student_id: student.id,
-    }).sort({ createdAt: 'desc' });
+    })
+      .sort({ createdAt: 'desc' })
+      .skip((page - 1) * 30)
+      .limit(30);
 
     return res.json(checkins);
   }
